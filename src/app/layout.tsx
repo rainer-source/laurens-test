@@ -1,3 +1,5 @@
+export const runtime = 'edge'
+
 import type { Metadata } from 'next'
 import { Cormorant, Dancing_Script, Jost } from 'next/font/google'
 import './globals.css'

@@ -1,3 +1,5 @@
+export const runtime = 'edge'
+
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import { getProductById, products } from '@/lib/products'
@@ -6,10 +8,6 @@ import ProductCard from '@/components/ui/ProductCard'
 
 interface Props {
   params: Promise<{ id: string }>
-}
-
-export async function generateStaticParams() {
-  return products.map((p) => ({ id: p.id }))
 }
 
 export async function generateMetadata({ params }: Props) {
