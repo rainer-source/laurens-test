@@ -1,3 +1,5 @@
+export const runtime = 'edge'
+
 import { Suspense } from 'react'
 import { products } from '@/lib/products'
 import { Category } from '@/types'

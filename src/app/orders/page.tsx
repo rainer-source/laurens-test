@@ -1,3 +1,5 @@
+export const runtime = 'edge'
+
 import { dummyOrders } from '@/lib/orders'
 import { formatIDR } from '@/lib/currency'
 import { OrderStatus } from '@/types'

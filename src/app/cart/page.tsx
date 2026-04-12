@@ -1,5 +1,7 @@
 'use client'
 
+export const runtime = 'edge'
+
 import Link from 'next/link'
 import { useCart } from '@/context/CartContext'
 import { formatPrice, formatIDR } from '@/lib/currency'
