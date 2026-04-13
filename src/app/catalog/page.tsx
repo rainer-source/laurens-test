@@ -1,7 +1,7 @@
 export const runtime = 'edge'
 
 import { Suspense } from 'react'
-import { products } from '@/lib/products'
+import { getProducts, getProductsByCategory } from '@/lib/products'
 import { Category } from '@/types'
 import ProductCard from '@/components/ui/ProductCard'
 import FilterTabs from '@/components/catalog/FilterTabs'
@@ -14,8 +14,8 @@ export default async function CatalogPage({ searchParams }: Props) {
   const { category } = await searchParams
   const filtered =
     category === 'top' || category === 'dress'
-      ? products.filter((p) => p.category === (category as Category))
-      : products
+      ? await getProductsByCategory(category as Category)
+      : await getProducts()
 
   return (
     <div className="bg-cream min-h-screen">

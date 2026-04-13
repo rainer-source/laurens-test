@@ -5,8 +5,8 @@ import Image from 'next/image'
 import { getNewArrivals } from '@/lib/products'
 import ProductCard from '@/components/ui/ProductCard'
 
-export default function HomePage() {
-  const newArrivals = getNewArrivals()
+export default async function HomePage() {
+  const newArrivals = await getNewArrivals()
 
   return (
     <>
@@ -202,7 +202,7 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
             {newArrivals.map((p) => (
-              <ProductCard key={p.id} product={p} badge="New" />
+              <ProductCard key={p.id} product={p} />
             ))}
           </div>
         </div>

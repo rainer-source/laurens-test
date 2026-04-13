@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Product } from '@/types'
 import { useCart } from '@/context/CartContext'
 import { formatPrice } from '@/lib/currency'
+import WishlistButton from '@/components/ui/WishlistButton'
 
 interface Props {
   product: Product
@@ -26,6 +27,7 @@ export default function ProductCard({ product, badge }: Props) {
             {badge}
           </span>
         )}
+        <WishlistButton productId={product.id} />
         {/* Quick shop overlay */}
         <div className="absolute bottom-0 inset-x-0 bg-bark/90 text-petal text-[9px] font-normal tracking-[0.22em] uppercase text-center py-3.5 translate-y-full group-hover:translate-y-0 transition-transform duration-300">
           Quick Shop

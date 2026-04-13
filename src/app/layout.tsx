@@ -4,6 +4,8 @@ import type { Metadata } from 'next'
 import { Cormorant, Dancing_Script, Jost } from 'next/font/google'
 import './globals.css'
 import { CartProvider } from '@/context/CartContext'
+import { AuthProvider } from '@/context/AuthContext'
+import { WishlistProvider } from '@/context/WishlistContext'
 import AnnouncementBar from '@/components/layout/AnnouncementBar'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
@@ -43,12 +45,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${cormorant.variable} ${dancing.variable} ${jost.variable}`}
     >
       <body className="min-h-screen flex flex-col">
-        <CartProvider>
-          <AnnouncementBar />
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </CartProvider>
+        <AuthProvider>
+          <WishlistProvider>
+            <CartProvider>
+              <AnnouncementBar />
+              <Navbar />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </CartProvider>
+          </WishlistProvider>
+        </AuthProvider>
       </body>
     </html>
   )

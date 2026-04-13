@@ -11,7 +11,7 @@ export interface Product {
   priceIDR: number
   sizes: Size[]
   description: string
-  gradient: string   // CSS gradient value for placeholder image
+  gradient: string
   isNewArrival: boolean
 }
 

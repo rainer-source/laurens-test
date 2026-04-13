@@ -2,7 +2,7 @@ export const runtime = 'edge'
 
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { getProductById, products } from '@/lib/products'
+import { getProductById, getProductsByCategory } from '@/lib/products'
 import AddToCart from '@/components/product/AddToCart'
 import ProductCard from '@/components/ui/ProductCard'
 
@@ -12,20 +12,19 @@ interface Props {
 
 export async function generateMetadata({ params }: Props) {
   const { id } = await params
-  const product = getProductById(id)
+  const product = await getProductById(id)
   if (!product) return {}
   return { title: `${product.name} — Lauren's Clothes` }
 }
 
 export default async function ProductPage({ params }: Props) {
   const { id } = await params
-  const product = getProductById(id)
+  const product = await getProductById(id)
   if (!product) notFound()
 
   // Related: same category, exclude current
-  const related = products
-    .filter((p) => p.category === product.category && p.id !== product.id)
-    .slice(0, 4)
+  const categoryProducts = await getProductsByCategory(product.category)
+  const related = categoryProducts.filter((p) => p.id !== product.id).slice(0, 4)
 
   return (
     <div className="bg-cream min-h-screen">
