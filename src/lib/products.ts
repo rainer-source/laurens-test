@@ -1,4 +1,4 @@
-import { supabase } from './supabase'
+import { pgSelect, pgSelectOne } from './supabase-server'
 import { Product, Size, Category } from '@/types'
 
 // ─── UI metadata not stored in the DB ────────────────────────────────────────
@@ -53,47 +53,38 @@ const SELECT = 'id, name, category, price_idr, description, sizes, stock'
 // ─── Public API ───────────────────────────────────────────────────────────────
 
 export async function getProducts(): Promise<Product[]> {
-  const { data, error } = await supabase
-    .from('products')
-    .select(SELECT)
-    .order('name')
-
-  if (error) throw new Error(error.message)
-  return (data as ProductRow[]).map(fromRow)
+  const rows = await pgSelect<ProductRow>('products', {
+    select: SELECT,
+    order: 'name',
+  })
+  return rows.map(fromRow)
 }
 
 export async function getProductsByCategory(category: Category): Promise<Product[]> {
-  const { data, error } = await supabase
-    .from('products')
-    .select(SELECT)
-    .eq('category', category)
-    .order('name')
-
-  if (error) throw new Error(error.message)
-  return (data as ProductRow[]).map(fromRow)
+  const rows = await pgSelect<ProductRow>('products', {
+    select: SELECT,
+    filters: [{ col: 'category', op: 'eq', val: category }],
+    order: 'name',
+  })
+  return rows.map(fromRow)
 }
 
 export async function getProductById(id: string): Promise<Product | null> {
-  const { data, error } = await supabase
-    .from('products')
-    .select(SELECT)
-    .eq('id', id)
-    .single()
-
-  if (error) return null
-  return fromRow(data as ProductRow)
+  const row = await pgSelectOne<ProductRow>('products', {
+    select: SELECT,
+    filters: [{ col: 'id', op: 'eq', val: id }],
+  })
+  return row ? fromRow(row) : null
 }
 
 export async function getProductsByIds(ids: string[]): Promise<Product[]> {
   if (ids.length === 0) return []
-  const { data, error } = await supabase
-    .from('products')
-    .select(SELECT)
-    .in('id', ids)
-    .order('name')
-
-  if (error) throw new Error(error.message)
-  return (data as ProductRow[]).map(fromRow)
+  const rows = await pgSelect<ProductRow>('products', {
+    select: SELECT,
+    filters: [{ col: 'id', op: 'in', val: ids }],
+    order: 'name',
+  })
+  return rows.map(fromRow)
 }
 
 export async function getNewArrivals(): Promise<Product[]> {

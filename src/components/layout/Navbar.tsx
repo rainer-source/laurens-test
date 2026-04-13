@@ -5,8 +5,10 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useCart } from '@/context/CartContext'
 import { useAuth } from '@/context/AuthContext'
 import CurrencyToggle from '@/components/ui/CurrencyToggle'
-import SearchOverlay from '@/components/ui/SearchOverlay'
+import dynamic from 'next/dynamic'
 import { useState, useEffect } from 'react'
+
+const SearchOverlay = dynamic(() => import('@/components/ui/SearchOverlay'), { ssr: false })
 
 const navLinks = [
   { label: 'Collections', href: '/catalog' },
@@ -33,7 +35,7 @@ export default function Navbar() {
 
   return (
     <>
-    <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
+    {searchOpen && <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />}
     <header className="sticky top-0 z-50 bg-bark border-b border-white/5">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
 
