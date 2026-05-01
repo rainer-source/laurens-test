@@ -179,35 +179,30 @@ export default function ProductSpotlight() {
 
             {/* Right column — 40% content card */}
             <div
-              className="h-full flex flex-col items-center justify-center gap-8 px-12"
+              className="h-full flex flex-col items-center justify-center px-12"
               style={{ width: '40%', background: '#F5EFE8' }}
             >
-              {/* Logo thumbnail */}
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/logo.jpg"
-                alt="Lauren's Clothes"
-                style={{ width: 180, height: 180, objectFit: 'contain' }}
-              />
+              {/* Spacer pushes name+button to center, dots to bottom */}
+              <div className="flex-1 flex flex-col items-center justify-center gap-8">
+                {/* Product name */}
+                <p
+                  className="text-espresso text-center leading-tight"
+                  style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(32px, 3vw, 52px)' }}
+                >
+                  {slide.name}
+                </p>
 
-              {/* Product name */}
-              <p
-                className="text-espresso text-center leading-tight"
-                style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(32px, 3vw, 52px)' }}
-              >
-                {slide.name}
-              </p>
+                {/* Shop Now */}
+                <Link
+                  href={slide.href}
+                  className="bg-espresso text-cream text-[10px] font-normal tracking-[0.22em] uppercase px-10 py-4 hover:bg-mahogany transition-colors"
+                >
+                  Shop Now
+                </Link>
+              </div>
 
-              {/* Shop Now */}
-              <Link
-                href={slide.href}
-                className="bg-espresso text-cream text-[10px] font-normal tracking-[0.22em] uppercase px-10 py-4 hover:bg-mahogany transition-colors"
-              >
-                Shop Now
-              </Link>
-
-              {/* Dot indicators */}
-              <div className="flex items-center gap-2 mt-4">
+              {/* Dot indicators — pinned to bottom of panel */}
+              <div className="flex items-center gap-2 mt-auto pb-8">
                 {slides.map((_, j) =>
                   j === current ? (
                     <button
