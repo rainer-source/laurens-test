@@ -3,6 +3,8 @@ export const runtime = 'nodejs'
 import Link from 'next/link'
 import { getNewArrivals } from '@/lib/products'
 import ProductCard from '@/components/ui/ProductCard'
+import ProductSpotlight from '@/components/ui/ProductSpotlight'
+import NewArrivalsBanner from '@/components/ui/NewArrivalsBanner'
 
 export default async function HomePage() {
   const newArrivals = await getNewArrivals()
@@ -49,24 +51,18 @@ export default async function HomePage() {
           </p>
           <div className="flex items-center gap-6 flex-wrap justify-center">
             <a
-              href="#collections"
+              href="#new-arrivals"
               className="bg-espresso text-cream text-[10px] font-normal tracking-[0.22em] uppercase px-10 py-4 hover:bg-mahogany transition-colors"
             >
               Explore Collections
             </a>
-            <Link
-              href="/catalog"
-              className="text-[10px] font-normal tracking-[0.22em] uppercase text-cream border-b border-cream/50 pb-0.5 hover:text-petal hover:border-petal transition-colors"
-            >
-              View All
-            </Link>
           </div>
         </div>
 
         {/* Scroll indicator */}
         <a
-          href="#collections"
-          aria-label="Scroll to collections"
+          href="#new-arrivals"
+          aria-label="Scroll to new arrivals"
           className="absolute bottom-14 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce"
         >
           <span className="text-[8px] tracking-[0.3em] uppercase text-cream/70">Scroll</span>
@@ -81,6 +77,36 @@ export default async function HomePage() {
           </svg>
         </a>
       </section>
+
+      {/* ── NEW ARRIVALS ───────────────────────────────────── */}
+      <section id="new-arrivals" className="bg-cream px-6 lg:px-10 py-20">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex items-end justify-between mb-10">
+            <div>
+              <div className="flex items-center gap-3 mb-2">
+                <span className="block w-6 h-px bg-sienna" />
+                <span className="text-[9px] font-normal tracking-[0.4em] uppercase text-sienna">
+                  Just arrived
+                </span>
+              </div>
+              <h2
+                className="text-espresso"
+                style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(32px, 3vw, 48px)' }}
+              >
+                New <em>Arrivals</em>
+              </h2>
+            </div>
+          </div>
+          <NewArrivalsBanner />
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+            {newArrivals.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <ProductSpotlight />
 
       {/* ── CATEGORIES ────────────────────────────────────── */}
       <section id="collections" className="bg-cream px-6 lg:px-10 py-20">
@@ -177,39 +203,6 @@ export default async function HomePage() {
           ))}
         </div>
       </div>
-
-      {/* ── NEW ARRIVALS ───────────────────────────────────── */}
-      <section className="bg-cream px-6 lg:px-10 py-20">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-end justify-between mb-10">
-            <div>
-              <div className="flex items-center gap-3 mb-2">
-                <span className="block w-6 h-px bg-sienna" />
-                <span className="text-[9px] font-normal tracking-[0.4em] uppercase text-sienna">
-                  Just arrived
-                </span>
-              </div>
-              <h2
-                className="text-espresso"
-                style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(32px, 3vw, 48px)' }}
-              >
-                New <em>Arrivals</em>
-              </h2>
-            </div>
-            <Link
-              href="/catalog"
-              className="hidden sm:block text-[10px] font-normal tracking-[0.2em] uppercase text-espresso border-b border-linen pb-0.5 hover:text-mahogany hover:border-mahogany transition-colors mb-1.5"
-            >
-              View All →
-            </Link>
-          </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
-            {newArrivals.map((p) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ── BRAND STORY ───────────────────────────────────── */}
       <section id="about" className="grid grid-cols-1 lg:grid-cols-2">
