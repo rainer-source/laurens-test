@@ -4,15 +4,11 @@
  * This keeps the heavy GoTrueClient/realtime-js/storage-js out of the edge bundle.
  */
 
-const url = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+const BASE = () => `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1`
 
-const BASE = `${url}/rest/v1`
-
-const HEADERS = {
-  apikey: key,
-  Authorization: `Bearer ${key}`,
-  'Content-Type': 'application/json',
+const HEADERS = () => {
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  return { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' }
 }
 
 type FilterOp = 'eq' | 'in' | 'ilike'
@@ -53,8 +49,8 @@ function buildQuery(opts: SelectOpts): string {
 }
 
 export async function pgSelect<T>(table: string, opts: SelectOpts = {}): Promise<T[]> {
-  const res = await fetch(`${BASE}/${table}${buildQuery(opts)}`, {
-    headers: HEADERS,
+  const res = await fetch(`${BASE()}/${table}${buildQuery(opts)}`, {
+    headers: HEADERS(),
     // Next.js edge cache: no-store keeps data fresh (products can change)
     cache: 'no-store',
   })
@@ -63,9 +59,9 @@ export async function pgSelect<T>(table: string, opts: SelectOpts = {}): Promise
 }
 
 export async function pgSelectOne<T>(table: string, opts: SelectOpts = {}): Promise<T | null> {
-  const res = await fetch(`${BASE}/${table}${buildQuery(opts)}`, {
+  const res = await fetch(`${BASE()}/${table}${buildQuery(opts)}`, {
     headers: {
-      ...HEADERS,
+      ...HEADERS(),
       // PostgREST returns a single object (not array) with this header
       Accept: 'application/vnd.pgrst.object+json',
     },

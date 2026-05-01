@@ -1,7 +1,6 @@
-export const runtime = 'edge'
+export const runtime = 'nodejs'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { getNewArrivals } from '@/lib/products'
 import ProductCard from '@/components/ui/ProductCard'
 
@@ -11,17 +10,24 @@ export default async function HomePage() {
   return (
     <>
       {/* ── HERO ──────────────────────────────────────────── */}
-      <section className="min-h-[calc(100vh-100px)] grid grid-cols-1 lg:grid-cols-2">
+      <section
+        className="relative h-screen min-h-[600px] flex flex-col items-center justify-center overflow-hidden"
+        style={{ backgroundImage: "url('/hero1.png')", backgroundSize: 'cover', backgroundPosition: 'center' }}
+      >
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-black/20" />
+
         {/* Content */}
-        <div className="flex flex-col justify-center px-8 py-16 lg:px-16 lg:py-24 bg-cream">
+        <div className="relative z-10 flex flex-col items-center text-center px-6">
           <div className="flex items-center gap-3 mb-7">
-            <span className="block w-6 h-px bg-sienna" />
-            <span className="text-[9px] font-normal tracking-[0.4em] uppercase text-sienna">
+            <span className="block w-6 h-px bg-petal/70" />
+            <span className="text-[9px] font-normal tracking-[0.4em] uppercase text-petal/90">
               New Arrivals — Spring 2025
             </span>
+            <span className="block w-6 h-px bg-petal/70" />
           </div>
           <h1
-            className="text-espresso leading-[1.08] mb-3"
+            className="text-cream leading-[1.08] mb-3 drop-shadow-sm"
             style={{
               fontFamily: 'var(--font-cormorant)',
               fontWeight: 300,
@@ -32,55 +38,52 @@ export default async function HomePage() {
             <em>every moment</em>
           </h1>
           <p
-            className="text-sienna mb-8"
+            className="text-petal mb-8"
             style={{ fontFamily: 'var(--font-dancing)', fontSize: '22px' }}
           >
             beauty in simplicity
           </p>
-          <p className="text-[14px] font-light leading-[1.85] text-rosewood max-w-[360px] mb-12">
+          <p className="text-[14px] font-light leading-[1.85] text-cream/80 max-w-[360px] mb-12">
             Timeless pieces crafted with care — designed for the modern woman who
             finds elegance in the everyday. From morning light to evening out.
           </p>
-          <div className="flex items-center gap-6 flex-wrap">
-            <Link
-              href="/catalog"
+          <div className="flex items-center gap-6 flex-wrap justify-center">
+            <a
+              href="#collections"
               className="bg-espresso text-cream text-[10px] font-normal tracking-[0.22em] uppercase px-10 py-4 hover:bg-mahogany transition-colors"
             >
               Explore Collections
-            </Link>
+            </a>
             <Link
               href="/catalog"
-              className="text-[10px] font-normal tracking-[0.22em] uppercase text-espresso border-b border-linen pb-0.5 hover:text-mahogany hover:border-mahogany transition-colors"
+              className="text-[10px] font-normal tracking-[0.22em] uppercase text-cream border-b border-cream/50 pb-0.5 hover:text-petal hover:border-petal transition-colors"
             >
               View All
             </Link>
           </div>
         </div>
 
-        {/* Visual */}
-        <div
-          className="relative min-h-[400px] lg:min-h-0 flex items-center justify-center"
-          style={{ background: 'linear-gradient(145deg, #F0E4DC 0%, #E8D5C8 45%, #D9C9BF 100%)' }}
+        {/* Scroll indicator */}
+        <a
+          href="#collections"
+          aria-label="Scroll to collections"
+          className="absolute bottom-14 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce"
         >
-          <div className="relative z-10 text-center p-10">
-            <Image
-              src="/logo.jpg"
-              alt="Lauren's Clothes"
-              width={340}
-              height={340}
-              className="w-[min(320px,80%)] mx-auto drop-shadow-md"
-              priority
+          <span className="text-[8px] tracking-[0.3em] uppercase text-cream/70">Scroll</span>
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="text-cream/70">
+            <path
+              d="M9 3v12M9 15l-4.5-4.5M9 15l4.5-4.5"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
-          </div>
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 hidden lg:flex">
-            <span className="text-[8px] tracking-[0.3em] uppercase text-sienna">Scroll</span>
-            <div className="w-px h-10 bg-gradient-to-b from-sienna to-transparent" />
-          </div>
-        </div>
+          </svg>
+        </a>
       </section>
 
       {/* ── CATEGORIES ────────────────────────────────────── */}
-      <section className="bg-cream px-6 lg:px-10 py-20">
+      <section id="collections" className="bg-cream px-6 lg:px-10 py-20">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 mb-2">
             <span className="block w-6 h-px bg-sienna" />
