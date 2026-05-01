@@ -33,8 +33,8 @@ export default function NewArrivalsBanner() {
               alt={slide.name}
               style={{ width: '100%', height: 'auto', objectFit: 'cover', display: 'block' }}
             />
-            {/* Text overlay — right side of image */}
-            <div className="absolute inset-0 flex items-center justify-end">
+            {/* Text overlay — desktop only, right side of image */}
+            <div className="hidden md:flex absolute inset-0 items-center justify-end">
               <div className="pr-8 lg:pr-16 flex flex-col gap-4 items-end text-right">
                 <p
                   className="text-espresso leading-tight"
@@ -44,7 +44,7 @@ export default function NewArrivalsBanner() {
                 </p>
                 <Link
                   href={slide.href}
-                  className="self-start text-[10px] font-normal tracking-[0.22em] uppercase text-espresso border-b border-espresso/50 pb-0.5 hover:text-mahogany hover:border-mahogany transition-colors"
+                  className="self-end text-[10px] font-normal tracking-[0.22em] uppercase text-espresso border-b border-espresso/50 pb-0.5 hover:text-mahogany hover:border-mahogany transition-colors"
                 >
                   Shop Now
                 </Link>
@@ -67,6 +67,22 @@ export default function NewArrivalsBanner() {
             />
           ))}
         </div>
+      </div>
+
+      {/* Mobile text — shown below the image, hidden on desktop */}
+      <div className="md:hidden px-6 pt-5 pb-2 flex flex-col items-center text-center">
+        <p
+          className="text-espresso leading-tight mb-3"
+          style={{ fontFamily: 'var(--font-cormorant)', fontWeight: 300, fontSize: 'clamp(28px, 7vw, 40px)' }}
+        >
+          {slides[current].name}
+        </p>
+        <Link
+          href={slides[current].href}
+          className="text-[10px] font-normal tracking-[0.22em] uppercase text-espresso border-b border-espresso/50 pb-0.5 hover:text-mahogany hover:border-mahogany transition-colors"
+        >
+          Shop Now
+        </Link>
       </div>
     </div>
   )
